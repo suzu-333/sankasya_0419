@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ご来場確認 — iL BRiLLE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --ivory:#fdf8f2;--ivory2:#f7efe3;--ivory3:#efe3d3;
+  --brown:#2c1a0e;--brown2:#4a2e18;--brown3:#7a5438;--brown4:#a87850;
+  --gold:#b8922a;--gold2:#d4aa48;--gold-line:#c8a83a;--gold-pale:#f5ead0;
+  --green:#2a5e3a;--green-bg:#e8f5ed;--green-dark:#1e4a2a;
+  --red:#7a2020;--red-bg:#faeaea;
+  --border:#d4b878;--border-lt:#e8d4a0;
+}
+html,body{min-height:100vh;background:var(--ivory);font-family:"Noto Serif JP",serif;color:var(--brown);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 60% 40% at 15% 20%,rgba(200,168,58,0.06),transparent 70%),radial-gradient(ellipse 50% 60% at 85% 80%,rgba(200,168,58,0.05),transparent 70%)}
+.page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 16px 60px}
+.brand{text-align:center;margin-bottom:30px;width:100%;max-width:420px}
+.brand-eyebrow{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:11px;letter-spacing:.3em;color:var(--gold2);text-transform:uppercase;margin-bottom:12px;display:block}
+.brand-emblem{width:68px;height:68px;border-radius:50%;border:1px solid var(--border);background:var(--ivory2);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;position:relative}
+.brand-emblem::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:.5px solid var(--border-lt)}
+.brand-monogram{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:600;color:var(--gold);letter-spacing:.05em}
+.brand-name{font-family:"Cormorant Garamond",serif;font-size:30px;font-weight:300;letter-spacing:.22em;color:var(--brown);text-transform:uppercase;line-height:1;display:block}
+.brand-name em{font-style:normal;font-weight:500;color:var(--brown2)}
+.brand-rule{display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 0}
+.brand-rule-line{flex:1;max-width:60px;height:.5px;background:var(--gold-line)}
+.brand-rule-diamond{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);flex-shrink:0}
+.brand-serif{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:15px;font-weight:300;color:var(--brown3);letter-spacing:.1em}
+.brand-event{font-size:10px;letter-spacing:.18em;color:var(--brown4);text-transform:uppercase;margin-top:8px}
+.card{width:100%;max-width:420px;background:white;border:1px solid var(--border-lt);border-radius:2px;overflow:hidden;box-shadow:0 2px 40px rgba(44,26,14,.08),0 0 0 4px var(--ivory)}
+.card-strip{height:4px;background:linear-gradient(90deg,var(--brown2),var(--gold),var(--gold2),var(--gold),var(--brown2))}
+.scr{padding:28px 24px 24px;display:none}
+.scr.on{display:block}
+#s-load{text-align:center;padding:40px 0}
+.spin{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border-lt);border-top-color:var(--gold);animation:spin .8s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-txt{font-size:12px;color:var(--brown4);letter-spacing:.1em}
+.s-eyebrow{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:12px;color:var(--gold);letter-spacing:.14em;text-align:center;display:block;margin-bottom:6px}
+.s-title{font-family:"Cormorant Garamond",serif;font-size:21px;font-weight:400;color:var(--brown);text-align:center;letter-spacing:.06em;margin-bottom:4px;line-height:1.3}
+.s-sub{font-size:12px;color:var(--brown3);text-align:center;margin-bottom:20px;line-height:1.8;letter-spacing:.04em}
+.search-wrap{position:relative;margin-bottom:10px}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--gold2);font-size:12px;font-family:"Cormorant Garamond",serif;pointer-events:none}
+#name-input{width:100%;padding:13px 14px 13px 34px;border:1px solid var(--border);border-radius:1px;font-size:16px;font-family:"Noto Serif JP",serif;color:var(--brown);background:var(--ivory2);outline:none;transition:border-color .2s,background .2s;letter-spacing:.02em}
+#name-input:focus{border-color:var(--gold);background:white}
+#name-input::placeholder{color:var(--brown4);font-style:italic;font-size:13px}
+.results-wrap{border:1px solid var(--border-lt);border-radius:1px;overflow:hidden}
+.result-row{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;border-bottom:.5px solid var(--border-lt);background:white;transition:background .12s;-webkit-tap-highlight-color:transparent}
+.result-row:last-child{border-bottom:none}
+.result-row:active{background:var(--ivory2)}
+.result-avatar{width:38px;height:38px;border-radius:50%;background:var(--ivory3);border:1px solid var(--border-lt);display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;font-size:14px;font-weight:500;color:var(--brown2);flex-shrink:0}
+.result-info{flex:1;min-width:0}
+.result-name{font-size:15px;font-weight:500;color:var(--brown);letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.result-furi{font-size:11px;color:var(--brown4);margin-top:2px;letter-spacing:.06em}
+.result-arrow{color:var(--gold);font-family:"Cormorant Garamond",serif;font-size:18px;flex-shrink:0}
+.no-results{text-align:center;padding:22px 16px;font-size:12px;color:var(--brown4);letter-spacing:.06em;line-height:1.8;font-style:italic}
+.back-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--brown4);cursor:pointer;background:none;border:none;font-family:"Noto Serif JP",serif;letter-spacing:.06em;margin-bottom:18px;padding:0}
+.confirm-eyebrow{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:11px;color:var(--gold);letter-spacing:.18em;text-transform:uppercase;display:block;text-align:center;margin-bottom:8px}
+.confirm-name{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:400;color:var(--brown);text-align:center;letter-spacing:.06em;line-height:1.2}
+.confirm-furi{font-size:11px;color:var(--brown3);text-align:center;margin-top:4px;letter-spacing:.1em}
+.divider{display:flex;align-items:center;gap:8px;margin:16px 0}
+.divider span{flex:1;height:.5px;background:var(--border-lt)}
+.divider i{font-style:normal;color:var(--gold);font-size:11px;font-family:"Cormorant Garamond",serif}
+.gift-box{background:linear-gradient(135deg,#fdf4e0,#fdf8f2);border:1px solid var(--border-lt);border-radius:1px;padding:13px 16px;display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.gift-mark{width:34px;height:34px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;font-size:16px;color:var(--gold);flex-shrink:0;background:white}
+.gift-label{font-size:9px;color:var(--brown4);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.gift-name{font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:500;color:var(--brown2);letter-spacing:.04em}
+.allergy-box{background:var(--red-bg);border:1px solid rgba(122,32,32,.2);border-radius:1px;padding:12px 16px;display:flex;gap:11px;margin-bottom:12px}
+.allergy-mark{width:22px;height:22px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.allergy-label{font-size:9px;color:var(--red);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.allergy-detail{font-size:13px;color:var(--red);font-weight:500;line-height:1.6;letter-spacing:.02em}
+.info-rows{margin-bottom:4px}
+.info-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:.5px solid var(--border-lt);gap:16px}
+.info-row:last-child{border-bottom:none}
+.info-k{font-size:11px;color:var(--brown4);flex-shrink:0;letter-spacing:.06em}
+.info-v{font-size:13px;color:var(--brown);text-align:right;line-height:1.5;letter-spacing:.02em}
+.btn-primary{width:100%;padding:16px;border:none;border-radius:1px;cursor:pointer;background:var(--brown2);color:white;font-family:"Cormorant Garamond",serif;font-size:15px;letter-spacing:.18em;text-transform:uppercase;font-weight:400;margin-top:20px;transition:background .15s}
+.btn-primary:active{background:var(--brown)}
+#s-already{text-align:center}
+.already-ring{width:64px;height:64px;border-radius:50%;background:var(--green-bg);border:1px solid rgba(42,94,58,.22);display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;font-size:28px;color:var(--green-dark);margin:0 auto 14px;animation:pop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.already-title{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:400;color:var(--green-dark);margin-bottom:6px;letter-spacing:.06em}
+.already-sub{font-size:12px;color:var(--brown3);line-height:1.9;letter-spacing:.04em}
+.btn-sub{margin-top:16px;padding:10px 20px;border:1px solid var(--border-lt);background:transparent;color:var(--brown3);border-radius:1px;font-size:12px;font-family:"Noto Serif JP",serif;cursor:pointer;letter-spacing:.06em}
+#s-success{text-align:center}
+.success-ring{width:70px;height:70px;border-radius:50%;border:1px solid var(--border);background:var(--ivory2);display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;font-size:28px;color:var(--gold);margin:0 auto 14px;animation:pop .5s cubic-bezier(.34,1.56,.64,1);position:relative}
+.success-ring::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:.5px solid var(--border-lt)}
+.success-title{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:300;color:var(--brown);letter-spacing:.12em;margin-bottom:4px;font-style:italic}
+.success-name{font-family:"Cormorant Garamond",serif;font-size:18px;color:var(--brown2);margin-bottom:10px;letter-spacing:.04em;font-weight:500}
+.success-msg{font-size:12px;color:var(--brown3);line-height:2;letter-spacing:.06em}
+.success-gift{margin-top:18px;background:linear-gradient(135deg,#fdf4e0,#fdf8f2);border:1px solid var(--border-lt);border-radius:1px;padding:14px;text-align:center}
+.sg-label{font-size:9px;color:var(--brown4);letter-spacing:.14em;text-transform:uppercase;margin-bottom:7px}
+.sg-mark{font-family:"Cormorant Garamond",serif;font-size:22px;color:var(--gold);margin-bottom:5px;display:block}
+.sg-name{font-family:"Cormorant Garamond",serif;font-size:17px;font-weight:500;color:var(--brown2);letter-spacing:.06em}
+.footer{margin-top:auto;padding-top:30px;text-align:center}
+.footer-txt{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:11px;color:var(--brown4);letter-spacing:.14em}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="brand">
+    <span class="brand-eyebrow">Skincare &amp; Haircare</span>
+    <div class="brand-emblem"><div class="brand-monogram">iB</div></div>
+    <span class="brand-name">i<em>L</em> BR<em>i</em>LLE</span>
+    <div class="brand-rule"><div class="brand-rule-line"></div><div class="brand-rule-diamond"></div><div class="brand-rule-line"></div></div>
+    <div class="brand-serif">Serica Naturelle</div>
+    <div class="brand-event">New Collection Party — Guest Check-in</div>
+  </div>
+  <div class="card">
+    <div class="card-strip"></div>
+    <div class="scr on" id="s-load"><div class="spin"></div><div class="load-txt">読み込み中…</div></div>
+    <div class="scr" id="s-search">
+      <span class="s-eyebrow">Welcome</span>
+      <div class="s-title">お名前を検索してください</div>
+      <div class="s-sub">フリガナまたはお名前の一部を<br>入力すると候補が表示されます</div>
+      <div class="search-wrap">
+        <span class="search-icon">✦</span>
+        <input id="name-input" type="search" placeholder="例：カワハラ、川原…" autocomplete="off" spellcheck="false">
+      </div>
+      <div id="results-container"></div>
+    </div>
+    <div class="scr" id="s-confirm">
+      <button class="back-btn" onclick="goBack()">← 検索に戻る</button>
+      <span class="confirm-eyebrow">Bienvenue</span>
+      <div class="confirm-name" id="c-name"></div>
+      <div class="confirm-furi" id="c-furi"></div>
+      <div class="divider"><span></span><i>◆</i><span></span></div>
+      <div id="c-allergy"></div>
+      <div id="c-gift"></div>
+      <div class="info-rows" id="c-rows"></div>
+      <button class="btn-primary" id="btn-do">ご来場を確認する</button>
+    </div>
+    <div class="scr" id="s-already">
+      <div class="already-ring">✓</div>
+      <div class="already-title">チェックイン済みです</div>
+      <div class="already-sub">ご来場はすでに確認されています。<br>本日はどうぞごゆっくりお楽しみください。</div>
+      <div id="already-gift" style="margin-top:16px"></div>
+      <button class="btn-sub" onclick="goSearch()">← 別のお名前を検索</button>
+    </div>
+    <div class="scr" id="s-success">
+      <div class="success-ring">✦</div>
+      <div class="success-title">Bienvenue</div>
+      <div class="success-name" id="s-name"></div>
+      <div class="success-msg">ご来場をお待ちしておりました。<br>本日はどうぞごゆっくりお楽しみください。</div>
+      <div id="s-gift"></div>
+    </div>
+  </div>
+  <div class="footer"><div class="footer-txt">iL BRiLLE — Serica Naturelle</div></div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getDatabase,ref,get,update,onValue}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const FIREBASE_CONFIG={
+  apiKey: "AIzaSyDo1EE1CZ0bB4p3EFhIs5L1z2aJzeucyik",
+  authDomain: "ilbrille-party.firebaseapp.com",
+  databaseURL: "https://ilbrille-party-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "ilbrille-party",
+  storageBucket: "ilbrille-party.firebasestorage.app",
+  messagingSenderId: "463110116614",
+  appId: "1:463110116614:web:37f338e7cee77e3962fa87"
+};
+const GUESTS=[{"id": 0, "name": "-H.E.Chum Sounry（在東京カンボジア王国全権大使、 招待なので参加費無料。）", "furigana": "", "paid": true, "arrival": "14:30", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "", "gift": "全セット"}, {"id": 1, "name": "Mr.Anderson Huang（台湾からのお客様。 招待なので参加費無料）", "furigana": "", "paid": true, "arrival": "12:30", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "ギフト不要"}, {"id": 2, "name": "Mr.Kenneth Huang（台湾からのお客様。 招待なので参加費無料）", "furigana": "", "paid": true, "arrival": "12:30", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "ギフト不要"}, {"id": 3, "name": "相田（タナカ）　典子", "furigana": "アイダ　ノリコ", "paid": true, "arrival": "12,", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "その他", "gift": "ソープ"}, {"id": 4, "name": "青柳沙耶", "furigana": "アオヤギサヤ", "paid": true, "arrival": "11:50", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "スカルプヘアエッセンス"}, {"id": 5, "name": "浅見摩紀", "furigana": "アサミマキ", "paid": true, "arrival": "何時でも早く行きます。", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "浅見 摩紀", "gift": "グロウスキンクリーム"}, {"id": 6, "name": "ヨシダハルカ", "furigana": "アミ", "paid": true, "arrival": "", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "立木つばさ", "gift": ""}, {"id": 7, "name": "飯田麻実", "furigana": "イイダアサミ", "paid": true, "arrival": "12:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "浅見 摩紀", "gift": "グロウスキンクリーム"}, {"id": 8, "name": "市川静佳", "furigana": "イチカワシズカ", "paid": true, "arrival": "12時", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 9, "name": "岩本義智", "furigana": "イワモトヨシトモ", "paid": true, "arrival": "12:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "", "gift": "シャンプーがいいのでは？"}, {"id": 10, "name": "臼井 綾香", "furigana": "ウスイ アヤカ", "paid": true, "arrival": "準備の時間に伺います。", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 11, "name": "内山奈央子", "furigana": "ウチヤマナオコ", "paid": false, "arrival": "11:45", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "グロウスキンクリーム"}, {"id": 12, "name": "内山寛実", "furigana": "ウチヤマヒロミ", "paid": true, "arrival": "11:30", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "グロウスキンクリーム"}, {"id": 13, "name": "大里和美(4/7 西尾様より キャンセル連絡あり)", "furigana": "オオサトマサミ", "paid": true, "arrival": "12時", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "西尾いづみさん", "gift": "グロウスキンクリーム"}, {"id": 14, "name": "鍵和田優理", "furigana": "カギワダユウリ", "paid": true, "arrival": "11時半", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 15, "name": "加藤礼子", "furigana": "カトウ　レイコ", "paid": true, "arrival": "", "hasAllergy": true, "allergyDetail": "貝類（出汁などは大丈夫です）", "hasChild": false, "referral": "立木つばさ", "gift": ""}, {"id": 16, "name": "加藤あつこ", "furigana": "カトウアツコ", "paid": true, "arrival": "定時", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "ソープ"}, {"id": 17, "name": "加藤和則", "furigana": "カトウカズノリ", "paid": true, "arrival": "11:30", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "ソープ"}, {"id": 18, "name": "金子美紀", "furigana": "カネコミキ", "paid": true, "arrival": "12時", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "浅見 摩紀", "gift": "スカルプヘアエッセンス"}, {"id": 19, "name": "川原　奈菜", "furigana": "カワハラ　ナナ", "paid": true, "arrival": "準備の時間に行けるように調整中です", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 20, "name": "川原栄次朗", "furigana": "カワハラエイジロウ", "paid": true, "arrival": "11時30分", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "スカルプヘアシャンプー"}, {"id": 21, "name": "川邊真弓", "furigana": "カワベマユミ", "paid": true, "arrival": "11時30分", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 22, "name": "楠本愛", "furigana": "クスモトアイ", "paid": true, "arrival": "12時", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 23, "name": "久保田昭一", "furigana": "クボタシヨウイチ", "paid": false, "arrival": "13:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "", "gift": "クリームかな"}, {"id": 24, "name": "軍地由梨", "furigana": "グンチユウリ", "paid": true, "arrival": "11:30", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "グロウスキンクリーム"}, {"id": 25, "name": "小杉待子", "furigana": "コスギマチコ", "paid": true, "arrival": "開始時刻", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "浅見 摩紀", "gift": "グロウスキンクリーム"}, {"id": 26, "name": "ことり", "furigana": "コトリ（カスイココネ）", "paid": true, "arrival": "", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "立木つばさ", "gift": ""}, {"id": 27, "name": "こばえ　こずえ", "furigana": "コバエ　コズエ", "paid": true, "arrival": "", "hasAllergy": true, "allergyDetail": "バラ科のフルーツで・リンゴ、モモ、イチゴ", "hasChild": true, "referral": "立木つばさ", "gift": "グロウスキンクリーム"}, {"id": 28, "name": "近藤　俊介", "furigana": "コンドウ　シュンスケ", "paid": true, "arrival": "11:45", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "", "gift": "スカルプヘアシャンプー"}, {"id": 29, "name": "齋藤肖実", "furigana": "サイトウ　アユミ", "paid": true, "arrival": "", "hasAllergy": true, "allergyDetail": "たらこ以外の魚卵", "hasChild": false, "referral": "立木つばさ", "gift": ""}, {"id": 30, "name": "坂上　麗", "furigana": "サカノウエ　レイ", "paid": true, "arrival": "12:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 31, "name": "佐藤七海", "furigana": "サトウナナミ", "paid": true, "arrival": "11:30（何か早めにきて行うことがあれば、時間調整いたします）", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "グロウスキンクリーム"}, {"id": 32, "name": "椎野真祐子", "furigana": "シイノマユコ", "paid": true, "arrival": "12:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "モイスチャーローション"}, {"id": 33, "name": "下村優子", "furigana": "シモムラユウコ", "paid": true, "arrival": "12:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "グロウスキンクリーム"}, {"id": 34, "name": "新川敦子", "furigana": "シンカワアツコ", "paid": true, "arrival": "12:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 35, "name": "神宮司　真奈", "furigana": "ジングウシ　マナ", "paid": true, "arrival": "12:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "モイスチャーローション"}, {"id": 36, "name": "-H.E.高橋文明（日本カンボジア協会 会長、 招待なので参加費無料）", "furigana": "タカハシ　フミアキ", "paid": true, "arrival": "最初から", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "", "gift": "石鹸、シャンプーをお渡し"}, {"id": 37, "name": "立木つばさ", "furigana": "タチキツバサ", "paid": true, "arrival": "＊", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "立木つばさ", "gift": "グロウスキンクリーム"}, {"id": 38, "name": "田中結紀奈", "furigana": "タナカユキナ", "paid": true, "arrival": "11:30", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 39, "name": "戸田純一", "furigana": "トダジュンイチ", "paid": true, "arrival": "12時", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "加藤代表", "gift": "グロウスキンクリーム"}, {"id": 40, "name": "中島孝輔", "furigana": "ナカシマコウスケ", "paid": true, "arrival": "10:30 (愛と同行します）", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 41, "name": "永井幸奈", "furigana": "ナガイ　ユキナ", "paid": true, "arrival": "", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "立木つばさ", "gift": ""}, {"id": 42, "name": "長島 友行（カメラマンさんなので、 招待です。参加費無料にしてます）", "furigana": "ナガシマ トモユキ", "paid": true, "arrival": "12:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "スカルプヘアエッセンス"}, {"id": 43, "name": "長島　里江子", "furigana": "ナガシマ　リエコ", "paid": true, "arrival": "12時", "hasAllergy": false, "allergyDetail": "", "hasChild": true, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 44, "name": "成田遼太郎", "furigana": "ナリタリョウタロウ", "paid": true, "arrival": "12:00", "hasAllergy": true, "allergyDetail": "キウイ", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "グロウスキンクリーム"}, {"id": 45, "name": "西尾いづみ", "furigana": "にしおいづみ", "paid": true, "arrival": "12:00", "hasAllergy": false, "allergyDetail": "", "hasChild": true, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "グロウスキンクリーム"}, {"id": 46, "name": "のあ", "furigana": "ノア（テラモトミナミ）", "paid": true, "arrival": "", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "立木つばさ", "gift": "モイスチャーローション"}, {"id": 47, "name": "野田愛", "furigana": "ノダアイ", "paid": true, "arrival": "11:45", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "浅見 摩紀", "gift": "グロウスキンクリーム"}, {"id": 48, "name": "萩原　カンナ", "furigana": "ハギワラ　カンナ", "paid": true, "arrival": "11:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "浅見 摩紀", "gift": "モイスチャーローション"}, {"id": 49, "name": "萩原　貴翔（舞踊演者なので、 招待です。参加費無料）", "furigana": "ハギワラ　ユウト", "paid": true, "arrival": "１２時", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "浅見 摩紀", "gift": "ソープ"}, {"id": 50, "name": "羽坂博美", "furigana": "ハサカヒロミ", "paid": true, "arrival": "11時半~12時", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "浅見 摩紀", "gift": "グロウスキンクリーム"}, {"id": 51, "name": "藤原　恵以奈", "furigana": "フジワラ　エイナ", "paid": true, "arrival": "11:30", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 52, "name": "降旗英子", "furigana": "フリハタエイコ", "paid": true, "arrival": "12:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "グロウスキンクリーム"}, {"id": 53, "name": "真木みどり", "furigana": "マキミドリ", "paid": true, "arrival": "11時40分", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "グロウスキンクリーム"}, {"id": 54, "name": "水黒武士マエサコタツキ", "furigana": "ミズクロタケシ", "paid": true, "arrival": "12時", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "浅見 摩紀", "gift": "モイスチャーローション"}, {"id": 55, "name": "水野有紀", "furigana": "ミズノユキ", "paid": false, "arrival": "13:30〜14", "hasAllergy": true, "allergyDetail": "そば", "hasChild": false, "referral": "良原カリサメイ", "gift": "グロウスキンクリーム"}, {"id": 56, "name": "峰　彩葉", "furigana": "ミネ　イロハ（ユズキ）", "paid": true, "arrival": "", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "立木つばさ", "gift": ""}, {"id": 57, "name": "村田　文", "furigana": "ムラタ　アヤ", "paid": true, "arrival": "11:40", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "加藤 和則", "gift": "グロウスキンクリーム"}, {"id": 58, "name": "村田　文（重複）", "furigana": "ムラタ　アヤ", "paid": false, "arrival": "11:50", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "グロウスキンクリーム"}, {"id": 59, "name": "森山工陛", "furigana": "モリヤマコウヘイ", "paid": true, "arrival": "最初から", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "ソープ"}, {"id": 60, "name": "山口紗世", "furigana": "ヤマグチサヨ", "paid": true, "arrival": "12:00", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "モイスチャーローション"}, {"id": 61, "name": "山下 光浩", "furigana": "ヤマシタミツヒロ", "paid": false, "arrival": "11:45", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "株式会社イル・ヴリール / 加藤 和則", "gift": "モイスチャーローション"}, {"id": 62, "name": "横尾和弘", "furigana": "ヨコオカズヒロ", "paid": true, "arrival": "11時半頃", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "浅見 摩紀", "gift": "モイスチャーローション"}, {"id": 63, "name": "良原 カリサメイ", "furigana": "ヨシハラ カリサメイ", "paid": true, "arrival": "11:30〜12", "hasAllergy": true, "allergyDetail": "エビ", "hasChild": false, "referral": "楠本愛", "gift": "グロウスキンクリーム"}, {"id": 64, "name": "CHANKUNTHY　LAK", "furigana": "ラック　チャンクンティ", "paid": true, "arrival": "11:50", "hasAllergy": true, "allergyDetail": "キウイフルーツ、アボカド", "hasChild": false, "referral": "浅見 摩紀", "gift": "グロウスキンクリーム"}, {"id": 65, "name": "りさ（おそらく不参加になる）", "furigana": "リサ", "paid": false, "arrival": "", "hasAllergy": false, "allergyDetail": "", "hasChild": false, "referral": "立木つばさ", "gift": ""}, {"id": 66, "name": "作元", "furigana": "由香", "paid": true, "arrival": "12:00", "hasAllergy": true, "allergyDetail": "サバ・イワシ・サンマ", "hasChild": false, "referral": "加藤社長", "gift": "グロウスキンクリーム"}];
+function gmark(g){if(!g)return"◆";if(g.includes("クリーム"))return"✦";if(g.includes("ローション"))return"◈";if(g.includes("ソープ"))return"◇";if(g.includes("シャンプー")||g.includes("エッセンス"))return"◉";if(g.includes("全セット"))return"❖";return"◆"}
+function show(id){["load","search","confirm","already","success"].forEach(s=>{const e=document.getElementById("s-"+s);if(e)e.classList.toggle("on",s===id)})}
+function giftHTML(gift,mode){
+  if(!gift||gift==="ギフト不要")return"";
+  if(mode==="success")return`<div class="success-gift"><div class="sg-label">本日のギフト</div><span class="sg-mark">${gmark(gift)}</span><div class="sg-name">${gift}</div></div>`;
+  return`<div class="gift-box"><div class="gift-mark">${gmark(gift)}</div><div><div class="gift-label">本日のギフト</div><div class="gift-name">${gift}</div></div></div>`;
+}
+function irow(k,v){return`<div class="info-row"><span class="info-k">${k}</span><span class="info-v">${v}</span></div>`}
+let db=null,dbRef=null,checkinData={},selectedGuest=null;
+async function init(){
+  try{
+    const app=initializeApp(FIREBASE_CONFIG);
+    db=getDatabase(app);dbRef=ref(db,"checkin");
+    const snap=await get(dbRef);checkinData=snap.val()||{};
+    onValue(dbRef,s=>{checkinData=s.val()||{}});
+  }catch(e){try{checkinData=JSON.parse(localStorage.getItem("ilbrille_v4")||"{}")}catch{}}
+  setTimeout(()=>show("search"),400);
+}
+function toKata(s){return s.replace(/[\u3041-\u3096]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60))}
+document.getElementById("name-input").addEventListener("input",function(){
+  const q=this.value.trim(),cont=document.getElementById("results-container");
+  if(!q){cont.innerHTML="";return}
+  const qn=toKata(q).toLowerCase(),ql=q.toLowerCase();
+  const hits=GUESTS.filter(g=>g.name.toLowerCase().includes(ql)||toKata(g.furigana).toLowerCase().includes(qn)||g.furigana.toLowerCase().includes(ql)).slice(0,8);
+  if(!hits.length){cont.innerHTML=`<div class="no-results">見つかりませんでした。<br>スタッフへお声がけください。</div>`;return}
+  cont.innerHTML="<div class=\"results-wrap\">"+hits.map(g=>{
+    const ini=(g.furigana||g.name).replace(/\s/g,"").substring(0,2);
+    return`<div class="result-row" onclick="selectGuest(${g.id})"><div class="result-avatar">${ini}</div><div class="result-info"><div class="result-name">${g.name}</div><div class="result-furi">${g.furigana}</div></div><span class="result-arrow">›</span></div>`;
+  }).join("")+"</div>";
+});
+window.selectGuest=function(id){
+  const g=GUESTS.find(x=>x.id===id);if(!g)return;selectedGuest=g;
+  if(checkinData[id]){document.getElementById("already-gift").innerHTML=giftHTML(g.gift);show("already");return}
+  document.getElementById("c-name").textContent=g.name;
+  document.getElementById("c-furi").textContent=g.furigana;
+  document.getElementById("c-allergy").innerHTML=g.hasAllergy?`<div class="allergy-box"><div class="allergy-mark">!</div><div><div class="allergy-label">食物アレルギー</div><div class="allergy-detail">${g.allergyDetail||"詳細不明"}</div></div></div>`:"";
+  document.getElementById("c-gift").innerHTML=giftHTML(g.gift);
+  let rows="";if(g.arrival)rows+=irow("来場予定時刻",g.arrival);
+  document.getElementById("c-rows").innerHTML=rows;show("confirm");
+};
+window.goBack=()=>show("search");
+window.goSearch=()=>{document.getElementById("name-input").value="";document.getElementById("results-container").innerHTML="";show("search")};
+document.getElementById("btn-do").addEventListener("click",async()=>{
+  if(!selectedGuest)return;
+  const ts=Date.now();
+  checkinData[selectedGuest.id]=ts;
+  try{
+    if(db&&dbRef)await update(dbRef,{[selectedGuest.id]:ts});
+    else saveLocal();
+  }catch(e){saveLocal()}
+  document.getElementById("s-name").textContent=selectedGuest.name+" 様";
+  document.getElementById("s-gift").innerHTML=giftHTML(selectedGuest.gift,"success");
+  show("success");
+});
+function saveLocal(){const s={};Object.keys(checkinData).forEach(k=>{if(checkinData[k])s[k]=checkinData[k]});localStorage.setItem("ilbrille_v4",JSON.stringify(s))}
+init();
+</script>
+</body>
+</html>
