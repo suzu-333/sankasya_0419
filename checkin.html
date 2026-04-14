@@ -135,7 +135,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;bac
     <div class="scr" id="s-already">
       <div class="already-ring">✓</div>
       <div class="already-title">チェックイン済みです</div>
-      <div class="already-sub">ご来場はすでに確認されています。<br>本日はどうぞごゆっくりお楽しみください。<br>会場のWi-Fiはこちら<br>XXXXXXXXX<br>PW:xxxxxxxxx</div>
+      <div class="already-sub">ご来場はすでに確認されています。<br>本日はどうぞごゆっくりお楽しみください。</div>
       <div id="already-gift" style="margin-top:16px"></div>
       <button class="btn-sub" onclick="goSearch()">← 別のお名前を検索</button>
     </div>
@@ -143,7 +143,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;bac
       <div class="success-ring">✦</div>
       <div class="success-title">Bienvenue</div>
       <div class="success-name" id="s-name"></div>
-      <div class="success-msg">ご来場をお待ちしておりました。<br>本日はどうぞごゆっくりお楽しみください。<br>会場のWi-Fiはこちら<br>XXXXXXXXX<br>PW:xxxxxxxxx</div>
+      <div class="success-msg">ご来場をお待ちしておりました。<br>本日はどうぞごゆっくりお楽しみください。</div>
       <div id="s-gift"></div>
     </div>
   </div>
@@ -189,13 +189,13 @@ document.getElementById("name-input").addEventListener("input",function(){
   if(!hits.length){cont.innerHTML=`<div class="no-results">見つかりませんでした。<br>スタッフへお声がけください。</div>`;return}
   cont.innerHTML="<div class=\"results-wrap\">"+hits.map(g=>{
     const ini=(g.furigana||g.name).replace(/\s/g,"").substring(0,2);
-    return`<div class="result-row" onclick="selectGuest(${g.id})"><div class="result-avatar">${ini}</div><div class="result-info"><div class="result-name">${g.name}</div><div class="result-furi">${g.furigana}</div></div><span class="result-arrow">›</span></div>`;
+    return`<div class="result-row" onclick="selectGuest(${g.id})"><div class="result-avatar">${ini}</div><div class="result-info"><div class="result-name">${g.name} 様</div><div class="result-furi">${g.furigana}</div></div><span class="result-arrow">›</span></div>`;
   }).join("")+"</div>";
 });
 window.selectGuest=function(id){
   const g=GUESTS.find(x=>x.id===id);if(!g)return;selectedGuest=g;
   if(checkinData[id]){document.getElementById("already-gift").innerHTML=giftHTML(g.gift);show("already");return}
-  document.getElementById("c-name").textContent=g.name;
+  document.getElementById("c-name").textContent=g.name+" 様";
   document.getElementById("c-furi").textContent=g.furigana;
   document.getElementById("c-allergy").innerHTML=g.hasAllergy?`<div class="allergy-box"><div class="allergy-mark">!</div><div><div class="allergy-label">食物アレルギー</div><div class="allergy-detail">${g.allergyDetail||"詳細不明"}</div></div></div>`:"";
   document.getElementById("c-gift").innerHTML=giftHTML(g.gift);
