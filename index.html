@@ -351,19 +351,19 @@ function gRow(g){
     ${btns}
   </div>`;
 }
-function doCheckin(e,id){
+window.doCheckin=function(e,id){
   e.stopPropagation();
   const g=guests.find(x=>x.id===id);if(!g||g.checkedIn)return;
   setCheckin(id,true);
   showToast(`${g.name} — ご来場を確認しました ✦`);
 }
-function doUncheck(e,id){
+window.doUncheck=function(e,id){
   e.stopPropagation();
   const g=guests.find(x=>x.id===id);if(!g||!g.checkedIn)return;
   setCheckin(id,false);
   showToast(`${g.name} — チェックを取り消しました`);
 }
-function openModal(id){
+window.openModal=function(id){
   selectedId=id;const g=guests.find(x=>x.id===id);
   document.getElementById("m-name").textContent=g.name;
   document.getElementById("m-furigana").textContent=g.furigana||"";
@@ -383,8 +383,8 @@ function openModal(id){
   btn.className=g.checkedIn?"btn-gold undo":"btn-gold";
   const ov=document.getElementById("modal-overlay");ov.style.display="flex";ov.classList.remove("hiding");
 }
-function handleOverlayClick(e){if(e.target===document.getElementById("modal-overlay"))closeModal()}
-function closeModal(){const ov=document.getElementById("modal-overlay");ov.classList.add("hiding");setTimeout(()=>{ov.style.display="none";ov.classList.remove("hiding")},150);selectedId=null}
+window.handleOverlayClick=function(e){if(e.target===document.getElementById("modal-overlay"))closeModal()}
+window.closeModal=function(){const ov=document.getElementById("modal-overlay");ov.classList.add("hiding");setTimeout(()=>{ov.style.display="none";ov.classList.remove("hiding")},150);selectedId=null}
 document.getElementById("m-btn").addEventListener("click",()=>{
   const g=guests.find(x=>x.id===selectedId);if(!g)return;
   const nv=!g.checkedIn;
